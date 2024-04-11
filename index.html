@@ -31,20 +31,29 @@
         const app = initializeApp(firebaseConfig);
         const messaging = getMessaging(app);
         
-        navigator.serviceWorker.register('sw.js').then(registration => {
-            getToken(messaging, { serviceWorkerRegistration: registration, vapidKey: 'BG4ykwW07zF4eciS-oqD7X87Kc8Ac_IpqSKuwaxNOOQQMBoWLI8l6g2yLbzdKLTiKEm2M_rbYSUoTFbZ53td6bU' }).then((currentToken) => {
-            if (currentToken) {
-                document.querySelector('body').innerHTML += `<p>${currentToken}</p>`
-            } else {
-                // Show permission request UI
-                console.log('No registration token available. Request permission to generate one.');
-                // ...
-            }
-            }).catch((err) => {
-            console.log('An error occurred while retrieving token. ', err);
-            // ...
+        if ('Notification' in window) {
+            Notification.requestPermission().then((permission) => {
+                if (permission === 'granted') {
+                    console.log('Разрешение на уведомления получено!');
+                    navigator.serviceWorker.register('sw.js').then(registration => {
+                        getToken(messaging, { serviceWorkerRegistration: registration, vapidKey: 'BG4ykwW07zF4eciS-oqD7X87Kc8Ac_IpqSKuwaxNOOQQMBoWLI8l6g2yLbzdKLTiKEm2M_rbYSUoTFbZ53td6bU' }).then((currentToken) => {
+                        if (currentToken) {
+                            document.querySelector('body').innerHTML += `<p>${currentToken}</p>`
+                        } else {
+                            // Show permission request UI
+                            console.log('No registration token available. Request permission to generate one.');
+                            // ...
+                        }
+                        }).catch((err) => {
+                        console.log('An error occurred while retrieving token. ', err);
+                        // ...
+                        });
+                    });
+                }
             });
-        });
+        } else {
+            console.log('Уведомления не поддерживаются в этом браузере.');
+        }
       </script>
 </body>
 </html>
