@@ -3,9 +3,7 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
 const CACHE = "pwabuilder-page";
-
-// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
-const offlineFallbackPage = "ToDo-replace-this-name.html";
+const offlineFallbackPage = "index.html"; // Изменил на вашу стартовую страницу
 
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
@@ -59,6 +57,6 @@ self.addEventListener('push', (event) => {
     }));
 });
 
-self.addEventListener('notificationclic', (event) => {
+self.addEventListener('notificationclick', (event) => {
     event.waitUntil(clients.openWindow(event.notification.data.url));
 });
