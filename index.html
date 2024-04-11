@@ -1,50 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json" />
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='manifest' href='manifest.json' />
     <title>Document</title>
 </head>
 <body>
     <h1>Notif App</h1>
-
-    <script type="module">
+    <button class='sub'>sub</button>
+    <script type='module'>
         // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-        import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-messaging.js";
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js';
+        import { getMessaging, getToken } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-messaging.js';
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
       
         // Your web app's Firebase configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyArN3Tkf2xG5D_xu_qyMXNPncgtvkgohUo",
-          authDomain: "notif-b7241.firebaseapp.com",
-          projectId: "notif-b7241",
-          storageBucket: "notif-b7241.appspot.com",
-          messagingSenderId: "968754788188",
-          appId: "1:968754788188:web:bacd9136bb84c6e8c27399"
+          apiKey: 'AIzaSyArN3Tkf2xG5D_xu_qyMXNPncgtvkgohUo',
+          authDomain: 'notif-b7241.firebaseapp.com',
+          projectId: 'notif-b7241',
+          storageBucket: 'notif-b7241.appspot.com',
+          messagingSenderId: '968754788188',
+          appId: '1:968754788188:web:bacd9136bb84c6e8c27399'
         };
 
-        
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const messaging = getMessaging(app);
-        Notification.requestPermission()
-        navigator.serviceWorker.register('sw.js').then(registration => {
-            getToken(messaging, { serviceWorkerRegistration: registration, vapidKey: 'BG4ykwW07zF4eciS-oqD7X87Kc8Ac_IpqSKuwaxNOOQQMBoWLI8l6g2yLbzdKLTiKEm2M_rbYSUoTFbZ53td6bU' }).then((currentToken) => {
-            if (currentToken) {
-                document.querySelector('body').innerHTML += `<p>${currentToken}</p>`
-            } else {
-                // Show permission request UI
-                console.log('No registration token available. Request permission to generate one.');
+        document.querySelector('.sub').addEventListener('click', subscribe)
+        function subscribe(){
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const messaging = getMessaging(app);
+            Notification.requestPermission()
+            navigator.serviceWorker.register('sw.js').then(registration => {
+                getToken(messaging, { serviceWorkerRegistration: registration, vapidKey: 'BG4ykwW07zF4eciS-oqD7X87Kc8Ac_IpqSKuwaxNOOQQMBoWLI8l6g2yLbzdKLTiKEm2M_rbYSUoTFbZ53td6bU' }).then((currentToken) => {
+                if (currentToken) {
+                    document.querySelector('body').innerHTML += `<p>${currentToken}</p>`
+                } else {
+                    // Show permission request UI
+                    console.log('No registration token available. Request permission to generate one.');
+                    // ...
+                }
+                }).catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
                 // ...
-            }
-            }).catch((err) => {
-            console.log('An error occurred while retrieving token. ', err);
-            // ...
+                });
             });
-        });
+        }
       </script>
 </body>
 </html>
