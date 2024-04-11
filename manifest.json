@@ -6,6 +6,8 @@
         "type": "image/png",
         "sizes": "512x512"
       }
-    ]
+    ],
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "short_name": "pwa_11"
   }
-  
