@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>Notif App</h1>
+    <div class="'token" style="max-width: 300px;"></div>
     <button class='sub'>sub</button>
     <script type='module'>
         // Import the functions you need from the SDKs you need
@@ -36,7 +37,7 @@
             navigator.serviceWorker.register('sw.js').then(registration => {
                 getToken(messaging, { serviceWorkerRegistration: registration, vapidKey: 'BG4ykwW07zF4eciS-oqD7X87Kc8Ac_IpqSKuwaxNOOQQMBoWLI8l6g2yLbzdKLTiKEm2M_rbYSUoTFbZ53td6bU' }).then((currentToken) => {
                 if (currentToken) {
-                    document.querySelector('body').innerHTML += `<p>${currentToken}</p>`
+                    document.querySelector('.token').innerHTML += `<p>${currentToken}</p>`
                 } else {
                     // Show permission request UI
                     console.log('No registration token available. Request permission to generate one.');
