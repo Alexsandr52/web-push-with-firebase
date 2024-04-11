@@ -30,7 +30,7 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const messaging = getMessaging(app);
-        messaging.reqestPermission();
+        Notification.requestPermission()
         navigator.serviceWorker.register('sw.js').then(registration => {
             getToken(messaging, { serviceWorkerRegistration: registration, vapidKey: 'BG4ykwW07zF4eciS-oqD7X87Kc8Ac_IpqSKuwaxNOOQQMBoWLI8l6g2yLbzdKLTiKEm2M_rbYSUoTFbZ53td6bU' }).then((currentToken) => {
             if (currentToken) {
